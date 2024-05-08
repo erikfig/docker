@@ -1,0 +1,52 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: erik
+      POSTGRES_PASSWORD: erik
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  rabbit:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - rabbit:/var/lib/rabbit/data
+
+  nats:
+    image: nats
+    restart: always
+    ports:
+      - "4222:4222"
+      - "6222:6222"
+      - "8222:8222"
+    volumes:
+      - nats:/var/lib/nats/data
+
+  redis:
+    image: redis/redis-stack:latest
+    restart: always
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    volumes:
+      - redis:/var/lib/redis/data
+
+volumes:
+  db:
+    driver: local
+  rabbit:
+    driver: local
+  nats:
+    driver: local
+  redis:
+    driver: local
