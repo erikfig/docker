@@ -41,10 +41,23 @@ services:
     volumes:
       - redis:/var/lib/redis/data
 
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: erik
+      MONGO_INITDB_ROOT_PASSWORD: erik
+
 volumes:
   db:
     driver: local
   rabbit:
+    driver: local
+  mongo:
     driver: local
   nats:
     driver: local
